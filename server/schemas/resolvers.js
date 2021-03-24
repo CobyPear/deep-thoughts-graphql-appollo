@@ -14,6 +14,12 @@ const resolvers = {
         },
         thought: async (_, { _id }) => {
             return Thought.findOne({ _id })
+        },
+        users: async () => {
+            return User.find({}).select('-__v -password').populate('thoughts friends')
+        },
+        user: async (_, { username }) => {
+            return User.findOne({ username: username }).select('-__v -password').populate('thoughts friends')
         }
     }
 }
