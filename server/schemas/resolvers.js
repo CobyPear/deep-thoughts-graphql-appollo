@@ -1,5 +1,6 @@
 const { User, Thought } = require('../models')
 const { AuthenticationError } = require('apollo-server-express');
+const { signToken } = require('../utils/auth')
 
 // a resolver function can accept up to 4 parameters in the following order:
 // parent: used for nested resolvers
@@ -26,23 +27,25 @@ const resolvers = {
     Mutation: {
         addUser: async (_, args) => {
             const user = await User.create(args)
-
-            return user
+            const token = signToken(user)
+            
+            return { token, user }
         },
         login: async (_, { email, password }) => {
             const user = await User.findOne({ email })
-
+            
             if (!user) {
                 throw new AuthenticationError('Incorrect credentials, check email or password')
             }
-
+            
             const correctPw = await user.isCorrectPassword(password)
-
+            
             if (!correctPw) {
                 throw new AuthenticationError('Incorrect credentials, check your password')
             }
             
-            return user
+            const token = signToken(user)
+            return { token, user }
         }
     }
 }
