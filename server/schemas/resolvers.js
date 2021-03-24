@@ -1,4 +1,5 @@
 const { User, Thought } = require('../models')
+const { AuthenticationError } = require('apollo-server-express');
 
 // a resolver function can accept up to 4 parameters in the following order:
 // parent: used for nested resolvers
@@ -20,6 +21,28 @@ const resolvers = {
         },
         user: async (_, { username }) => {
             return User.findOne({ username: username }).select('-__v -password').populate('thoughts friends')
+        }
+    },
+    Mutation: {
+        addUser: async (_, args) => {
+            const user = await User.create(args)
+
+            return user
+        },
+        login: async (_, { email, password }) => {
+            const user = await User.findOne({ email })
+
+            if (!user) {
+                throw new AuthenticationError('Incorrect credentials, check email or password')
+            }
+
+            const correctPw = await user.isCorrectPassword(password)
+
+            if (!correctPw) {
+                throw new AuthenticationError('Incorrect credentials, check your password')
+            }
+            
+            return user
         }
     }
 }
