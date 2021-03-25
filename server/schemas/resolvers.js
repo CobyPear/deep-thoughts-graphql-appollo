@@ -10,6 +10,13 @@ const { signToken } = require('../utils/auth')
 
 const resolvers = {
     Query: {
+        me: async = (_, args) => {
+            const userData = await User.findOne({})
+            .select('-__v -password')
+            .populate('thoughts friends')
+
+            return userData
+        },
         thoughts: async (_, { username }) => {
             const params = username ? { username } : {}
             return Thought.find(params).sort({ createdAt: -1 })
@@ -18,10 +25,14 @@ const resolvers = {
             return Thought.findOne({ _id })
         },
         users: async () => {
-            return User.find({}).select('-__v -password').populate('thoughts friends')
+            return User.find({})
+            .select('-__v -password')
+            .populate('thoughts friends')
         },
         user: async (_, { username }) => {
-            return User.findOne({ username: username }).select('-__v -password').populate('thoughts friends')
+            return User.findOne({ username: username })
+            .select('-__v -password')
+            .populate('thoughts friends')
         }
     },
     Mutation: {
