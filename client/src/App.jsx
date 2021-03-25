@@ -6,7 +6,7 @@ import ApolloClient from 'apollo-boost'
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import Home from './pages/Home';
+import Home from './pages/Home.jsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3001/graphql'
