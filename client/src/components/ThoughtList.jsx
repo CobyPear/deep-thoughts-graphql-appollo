@@ -17,9 +17,9 @@ const ThoughtList = ({ thoughts, title }) => {
                                 thought on {thought.createdAt}
                             </p>
                             <div className="cardBody">
-                                <p>{thought.thoughtText}</p>
-                                <p className="mb-0">
-                                    Reactions: {thought.reactionCount} || Click to {' '} {thought.reactionCout ? 'see' : 'start' } the discussion!
+                                <p className="p-3">{thought.thoughtText}</p>
+                                <p className="mb-0 p-3">
+                                    Reactions: {thought.reactionCount} || Click to {' '} {thought.reactionCount ? 'see' : 'start' } the discussion!
                                 </p>
                             </div>
                         </div>
