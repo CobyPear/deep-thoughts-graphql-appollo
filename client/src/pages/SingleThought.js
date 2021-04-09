@@ -1,5 +1,5 @@
 import React from 'react';
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import { useQuery } from '@apollo/react-hooks'
 import { QUERY_THOUGHT } from '../utils/queries'
 import ReactionList from '../components/ReactionList'
@@ -17,15 +17,17 @@ const SingleThought = props => {
   if (loading) {
     return <div className="spinner-border" role='status'></div>
   }
-  console.log(thought)
+  // console.log(thought)
 
   return (
     <div>
       <div className="card mb-3">
         <p className="card-header">
-          <span style={{ fontWeight: 700 }} className="text-light">
-            {thought.username}
-          </span>{' '}
+          <Link to={`/profile/${thought.username}`}>
+            <span style={{ fontWeight: 700 }} className="text-light">
+              {thought.username}
+            </span>{' '}
+          </Link>
           thought on {thought.createdAt}
         </p>
         <div className="card-body">
