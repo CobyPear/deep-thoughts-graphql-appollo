@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon",
-    "seed": "node seeders/seeds.js"
+    "seed": "node seeders/seeds.js",
+    "client": "npm start --prefix ../client",
+    "dev": "concurrently \"npm start \" \"npm run client\""
   },
   "keywords": [],
   "author": "",
@@ -22,6 +24,7 @@
     "mongoose": "^5.9.9"
   },
   "devDependencies": {
+    "concurrently": "^6.0.1",
     "nodemon": "^2.0.3"
   }
 }
