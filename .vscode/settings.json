@@ -1,3 +1,6 @@
 {
-    "rainbowTags.allowEverywhere": true
+    "rainbowTags.allowEverywhere": true,
+    "emmet.includeLanguages": { 
+        "javascript": "javascriptreact"
+    }
 }
